@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import './BottomForm.dart';
+
 class CategoryList extends StatefulWidget {
   final Map categories;
   final String selectedCategory;
@@ -81,7 +83,7 @@ class _CategoryListState extends State<CategoryList> {
 
     var addCategoryWidget = GestureDetector(
       onTap: () {
-        widget.onAddCategory();
+        setBottomForm(context, 'category', widget.onAddCategory);
       },
       child: Container(
         margin: EdgeInsets.fromLTRB(0, 10.0, 10.0, 10.0),
@@ -107,7 +109,7 @@ class _CategoryListState extends State<CategoryList> {
               iconSize: 55.0,
               color: Colors.grey[400],
               onPressed: () {
-                widget.onAddCategory();
+                setBottomForm(context, 'category', widget.onAddCategory);
               },
             ),
             Text(

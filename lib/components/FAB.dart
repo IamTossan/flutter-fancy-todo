@@ -1,32 +1,20 @@
 import 'package:flutter/material.dart';
-import 'dart:math';
+
+import './BottomForm.dart';
 
 class FAB extends StatelessWidget {
   var onAdd;
-  FAB({onAdd}) {
+  var context;
+  FAB({onAdd, context}) {
     this.onAdd = onAdd;
-  }
-
-  List<String> labels = [
-    'brush my teeth',
-    'buy groceries',
-    'play video games',
-    'do my homeworks',
-    'feed my cats',
-    'read a book',
-    'learn a programming language',
-  ];
-
-  String generateTaskLabel() {
-    var r = Random();
-    return labels[r.nextInt(labels.length)];
+    this.context = context;
   }
 
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton(
       onPressed: () {
-        onAdd(generateTaskLabel());
+        setBottomForm(context, 'task', onAdd);
       },
       tooltip: 'Increment',
       child: Container(

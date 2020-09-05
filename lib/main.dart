@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'dart:math';
 
 import 'models/Task.dart';
 import 'models/TaskCatalog.dart';
@@ -33,6 +32,7 @@ class MyApp extends StatelessWidget {
         // the app on. For desktop platforms, the controls will be smaller and
         // closer together (more dense) than on mobile platforms.
         visualDensity: VisualDensity.adaptivePlatformDensity,
+
         textTheme: Theme.of(context).textTheme.apply(
               fontSizeFactor: 0.75,
             ),
@@ -81,21 +81,8 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  List<String> categories = [
-    'coding',
-    'investing',
-    'reading',
-    'chores',
-  ];
-
-  String generateCategory() {
-    var r = Random();
-    return categories[r.nextInt(categories.length)];
-  }
-
-  void addCategory() {
+  void addCategory(String newCategory) {
     setState(() {
-      String newCategory = generateCategory();
       taskCatalog.addCategory(newCategory);
       taskCatalog.updateSelectedCategory(newCategory);
     });
@@ -113,42 +100,45 @@ class _MyHomePageState extends State<MyHomePage> {
     final TextTheme textTheme = Theme.of(context).textTheme;
 
     return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0),
-                child: Text(
-                  'Mornin\' all',
-                  style: textTheme.headline3,
+      body: SingleChildScrollView(
+        child: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: Text(
+                    'Mornin\' all',
+                    style: textTheme.headline3,
+                  ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 5.0),
-                child: CategoryList(
-                  selectedCategory: taskCatalog.selectedCategory,
-                  categories: taskCatalog.tasks,
-                  onSelectCategory: updateSelectedCategory,
-                  onAddCategory: addCategory,
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 5.0),
+                  child: CategoryList(
+                    selectedCategory: taskCatalog.selectedCategory,
+                    categories: taskCatalog.tasks,
+                    onSelectCategory: updateSelectedCategory,
+                    onAddCategory: addCategory,
+                  ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 5.0),
-                child: TaskList(
-                  todoList: taskCatalog.currentTasks,
-                  onDone: updateTaskStatus,
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 5.0),
+                  child: TaskList(
+                    todoList: taskCatalog.currentTasks,
+                    onDone: updateTaskStatus,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
       floatingActionButton: FAB(
-          onAdd:
-              addTodo), // This trailing comma makes auto-formatting nicer for build methods.
+        onAdd: addTodo,
+        context: context,
+      ),
     );
   }
 }
