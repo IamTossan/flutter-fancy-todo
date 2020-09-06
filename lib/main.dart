@@ -55,7 +55,9 @@ class _MyHomePageState extends State<MyHomePage> {
     super.initState();
 
     getTaskCatalog().then((res) {
-      taskCatalog = TaskCatalog(tasks: res);
+      setState(() {
+        taskCatalog = TaskCatalog(tasks: res);
+      });
     });
   }
 
