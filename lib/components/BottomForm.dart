@@ -5,10 +5,12 @@ void setBottomForm(context, String formType, Function onAdd) {
 
   showModalBottomSheet(
     context: context,
+    isScrollControlled: true,
     backgroundColor: Colors.transparent,
     builder: (BuildContext bc) {
       return Container(
-        height: MediaQuery.of(context).size.height * 0.4,
+        height: MediaQuery.of(bc).size.height * 0.4 +
+            MediaQuery.of(bc).viewInsets.bottom / 2,
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.only(
