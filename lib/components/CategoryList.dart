@@ -72,7 +72,7 @@ class _CategoryListState extends State<CategoryList> {
                 ),
                 Text(
                   '$c ${widget.categories[c].where((t) => t.isDone == true).length}/${widget.categories[c].length}',
-                  style: textTheme.bodyText1,
+                  style: textTheme.bodyText1.apply(color: c == widget.selectedCategory ? Colors.white : Colors.black),
                   textScaleFactor: 1.5,
                 ),
                 SizedBox(height: 4.0),

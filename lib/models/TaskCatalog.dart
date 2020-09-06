@@ -19,14 +19,23 @@ class TaskCatalog {
       return MapEntry('all', reducedValue);
     });
 
+    Map<String, List<Task>> midPart = new Map.from(_tasks)..removeWhere((key, value) => key == 'others');
+
     return {
       'all': allCat.value,
-      ..._tasks,
+      ...midPart,
+      'others': _tasks['others'],
     };
   }
 
   List<Task> get currentTasks {
-    return tasks[selectedCategory];
+    List<Task> currentTasks = tasks[selectedCategory];
+    List<Task> ongoingTasks = currentTasks.where((e) => e.isDone == false).toList();
+    List<Task> finishedTasks = currentTasks.where((e) => e.isDone == true).toList();
+
+    ongoingTasks.sort((a, b) => b.updatedAt.compareTo(a.updatedAt));
+    finishedTasks.sort((a, b) => b.updatedAt.compareTo(a.updatedAt));
+    return [...ongoingTasks, ...finishedTasks];
   }
 
   void updateSelectedCategory(newCategory) {

@@ -40,7 +40,18 @@ class _TaskListState extends State<TaskList> {
           child: ListView.builder(
             itemCount: widget.todoList.length,
             itemBuilder: (_, int idx) {
-              var t = widget.todoList[idx];
+              Task t = widget.todoList[idx];
+
+              Duration elapsedTime = DateTime.now().difference(t.updatedAt);
+              String durationLabel = '';
+              if(elapsedTime >= Duration(days: 1)) {
+                durationLabel = '${elapsedTime.inDays} days ago';
+              } else if (elapsedTime >= Duration(hours: 1)) {
+                durationLabel = '${elapsedTime.inHours} hours ago';
+              } else {
+                durationLabel = '${elapsedTime.inMinutes} min ago';
+              }
+
               return Container(
                 child: GestureDetector(
                   onTap: () {
@@ -52,11 +63,20 @@ class _TaskListState extends State<TaskList> {
                         icon: t.isDone ? checkedIcon : uncheckedIcon,
                       ),
                       Text(
-                        '${t.label} (${t.category})',
+                        '${t.label} (${t.category}) ',
                         style: TextStyle(
                             decoration: t.isDone
                                 ? TextDecoration.lineThrough
                                 : TextDecoration.none),
+                      ),
+                      Text(
+                        durationLabel,
+                        style: TextStyle(
+                          decoration: t.isDone
+                              ? TextDecoration.lineThrough
+                              : TextDecoration.none,
+                          color: Colors.grey[400],
+                        ),
                       ),
                     ],
                   ),
