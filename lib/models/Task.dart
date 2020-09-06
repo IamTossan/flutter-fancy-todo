@@ -5,5 +5,8 @@ class Task {
   DateTime createdAt;
   DateTime updatedAt;
 
-  Task({this.label, this.category});
+  Task({this.label, this.category}) {
+    this.createdAt = DateTime.now();
+    this.updatedAt = DateTime.now();
+  }
 }
