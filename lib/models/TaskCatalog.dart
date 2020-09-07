@@ -69,6 +69,7 @@ class TaskCatalog {
     var taskIndex = _tasks[targetCategory].indexOf(targetTask);
     _tasks[targetCategory][taskIndex].isDone =
         !_tasks[targetCategory][taskIndex].isDone;
+    _tasks[targetCategory][taskIndex].updatedAt = DateTime.now();
 
     return _tasks[targetCategory][taskIndex];
   }
